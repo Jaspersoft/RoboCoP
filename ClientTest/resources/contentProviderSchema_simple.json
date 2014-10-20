@@ -1,6 +1,6 @@
 {
   "packageName": "com.rain.example.data",
-  "providerName": "rain_employee",
+  "providerName": "jasper_mobile_db",
   "databaseVersion": 1,
   "tables": [
     {
@@ -26,6 +26,10 @@
         {
           "type": "string",
           "name": "description"
+        },
+        {
+          "type": "boolean",
+          "name": "my"
         }
         ]
     },
@@ -71,6 +75,15 @@
             "name": "color"
           }
         ]
+     },
+     {
+        "name": "house",
+        "members": [
+          {
+            "type": "string",
+            "name": "label"
+          }
+        ]
      }
   ],
   "relationships" : [
@@ -78,6 +91,13 @@
           "name" : "person_vehicle",
           "left_table" : "person",
           "right_table" : "vehicle",
+          "foreign_key" : "custom_key_id",
+          "type" : "to_many"
+      },
+      {
+          "name" : "person_house",
+          "left_table" : "person",
+          "right_table" : "house",
           "type" : "to_many"
       }
   ]

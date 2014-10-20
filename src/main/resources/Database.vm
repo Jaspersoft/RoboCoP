@@ -6,9 +6,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-#set( $providerNameLower = $providerName.toLowerCase() )
+#set( $providerNameLower = $originalProviderName.toLowerCase() )
 public class ${providerName}Database extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "${providerNameLower}_database.db";
+    private static final String DATABASE_NAME = "${providerNameLower}";
     private static final int DATABASE_VERSION = ${databaseVersion};
 
     public ${providerName}Database(final Context context) {

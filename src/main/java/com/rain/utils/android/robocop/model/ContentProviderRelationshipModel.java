@@ -28,6 +28,9 @@ public class ContentProviderRelationshipModel {
     @SerializedName("right_table")
     private String mRightTableName;
 
+    @SerializedName("foreign_key")
+    private String mForeignKeyName;
+
     private ContentProviderTableModel mRightTableModel;
 
     public ContentProviderRelationshipModel(String referenceType, String customName, String leftTableName, String rightTableName) {
@@ -82,7 +85,11 @@ public class ContentProviderRelationshipModel {
     }
 
     public String getLeftTableForeignKey() {
-        return StringUtils.getConstantString(mLeftTableName) + "_ID";
+        if (mForeignKeyName == null) {
+            return StringUtils.getConstantString(mLeftTableName) + "_ID";
+        } else {
+            return StringUtils.getConstantString(mForeignKeyName);
+        }
     }
 
     public String getCustomName() {
@@ -96,7 +103,11 @@ public class ContentProviderRelationshipModel {
     public String getForeignKeyNameForTable(ContentProviderTableModel table) {
         if (table == null) return null;
         if (mReferenceType.equals(RELATIONSHIP_TYPE_TO_MANY) && mRightTableModel == table) {
-            return mLeftTableModel.getTableConstantName() + "_ID";
+            if (mForeignKeyName == null) {
+                return mLeftTableModel.getTableConstantName() + "_ID";
+            } else {
+                return StringUtils.getConstantString(mForeignKeyName);
+            }
         }
         return null;
     }

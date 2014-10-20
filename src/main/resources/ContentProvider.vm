@@ -71,12 +71,12 @@ public class ${providerName}Provider extends ContentProvider {
      }
 
 #foreach( $table in $tables )
-#set( $tableNameLower = $table.getTableClassName().toLowerCase() )
+#set( $tableName = $table.getTableName() )
 #set( $providerNameLower = $providerName.toLowerCase() )
     public static final class ${table.getTableClassName()}Content implements BaseColumns {
-        public static final String CONTENT_PATH = "${tableNameLower}";
-        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.${providerNameLower}_database.${tableNameLower}";
-        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.${providerNameLower}_database.${tableNameLower}";
+        public static final String CONTENT_PATH = "${tableName}";
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.${providerNameLower}_database.${tableName}";
+        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.${providerNameLower}_database.${tableName}";
     }
 
 #end

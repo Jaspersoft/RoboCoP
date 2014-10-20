@@ -37,8 +37,11 @@ public class ContentProviderModel {
     }
 
     public String getProviderName() {
-
         return StringUtils.convertToTitleCase(mProviderName);
+    }
+
+    public String getOriginalProviderName() {
+        return mProviderName;
     }
 
     public List<ContentProviderTableModel> getTables() {

@@ -1,8 +1,7 @@
 package ${packageName}.database.table;
 
-public interface ${tableName}Table {
-#set( $tableNameLower = $tableName.toLowerCase() )
-    String TABLE_NAME = "${tableNameLower}";
+public interface ${tableClassName}Table {
+    String TABLE_NAME = "${tableName}";
 
     String _ID = "_id";
 
@@ -37,11 +36,11 @@ public interface ${tableName}Table {
 #end
     String[] ALL_COLUMNS = new String[] {${allColumns}};
 
-    String SQL_CREATE = "CREATE TABLE ${tableNameLower} ( ${tableCreate} )";
+    String SQL_CREATE = "CREATE TABLE ${tableName} ( ${tableCreate} )";
 
-    String SQL_INSERT = "INSERT INTO ${tableNameLower} ( ${insertFields} ) VALUES ( ${escapeFields} )";
+    String SQL_INSERT = "INSERT INTO ${tableName} ( ${insertFields} ) VALUES ( ${escapeFields} )";
 
-    String SQL_DROP = "DROP TABLE IF EXISTS ${tableNameLower}";
+    String SQL_DROP = "DROP TABLE IF EXISTS ${tableName}";
 
     String WHERE_ID_EQUALS = _ID + "=?";
 

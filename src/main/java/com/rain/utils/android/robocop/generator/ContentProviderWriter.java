@@ -62,6 +62,7 @@ public class ContentProviderWriter {
             writeFile(engine, providerContext, "ProviderXML.vm", providerXMLPath, "/content-provider.xml");
 
             VelocityContext databaseContext = new VelocityContext(providerContext);
+            providerContext.put("originalProviderName", contentProviderModel.getOriginalProviderName());
             databaseContext.put("databaseVersion", contentProviderModel.getDatabaseVersion());
             writeFile(engine, databaseContext, "Database.vm", databasePath, "/" + contentProviderModel.getProviderName() + "Database.java");
 
@@ -69,7 +70,8 @@ public class ContentProviderWriter {
                 VelocityContext tableContext = new VelocityContext(baseContext);
                 tableContext.put("table", table);
                 tableContext.put("participatingRelationships", contentProviderModel.getRelationshipsForTable(table));
-                tableContext.put("tableName", table.getTableClassName());
+                tableContext.put("tableName", table.getTableName());
+                tableContext.put("tableClassName", table.getTableClassName());
                 tableContext.put("fields", table.getFields());
                 writeFile(engine, tableContext, "Table.vm", tablePath, "/" + table.getTableClassName() + "Table.java");
                 writeFile(engine, tableContext, "Model.vm", modelPath, "/" + table.getTableClassName() + ".java");

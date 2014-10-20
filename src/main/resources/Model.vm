@@ -3,12 +3,12 @@ package ${packageName}.model;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import ${packageName}.database.table.${tableName}Table;
+import ${packageName}.database.table.${tableClassName}Table;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ${tableName} {
+public class ${tableClassName} {
     private long mRowId;
 #foreach( $field in $fields )
 #if($field)
@@ -27,18 +27,22 @@ public class ${tableName} {
 
     private ContentValues mValues = new ContentValues();
 
-    public ${tableName}() {}
+    public ${tableClassName}() {}
 
-    public ${tableName}(final Cursor cursor) {
+    public ${tableClassName}(final Cursor cursor) {
         this(cursor, false);
     }
 
-    public ${tableName}(final Cursor cursor, boolean prependTableName) {
-        String prefix = prependTableName ? ${tableName}Table.TABLE_NAME + "_" : "";
-        setRowId(cursor.getLong(cursor.getColumnIndex(prefix + ${tableName}Table._ID)));
+    public ${tableClassName}(final Cursor cursor, boolean prependTableName) {
+        String prefix = prependTableName ? ${tableClassName}Table.TABLE_NAME + "_" : "";
+        setRowId(cursor.getLong(cursor.getColumnIndex(prefix + ${tableClassName}Table._ID)));
 #foreach ($field in $fields)
 #if($field)
-        set${field.getNameAsTitleCase()}(cursor.${field.getJavaTypeStringGetter()}(cursor.getColumnIndex(prefix + ${tableName}Table.${field.getConstantString()})));
+#if( $field.getJavaTypeString() == "boolean" )
+        set${field.getNameAsTitleCase()}(cursor.${field.getJavaTypeStringGetter()}(cursor.getColumnIndex(prefix + ${tableClassName}Table.${field.getConstantString()})) == 1);
+#else
+        set${field.getNameAsTitleCase()}(cursor.${field.getJavaTypeStringGetter()}(cursor.getColumnIndex(prefix + ${tableClassName}Table.${field.getConstantString()})));
+#end
 #end
 #end
 
@@ -47,7 +51,7 @@ public class ${tableName} {
 #set( $foreignKeyTitleCase = $relationship.getForeignKeyVariableAsTitleCase($table) )
 #set( $foreignKeyConstant = $relationship.getForeignKeyNameForTable($table) )
 #if( $foreignKeyTitleCase && $foreignKeyConstant)
-        set${foreignKeyTitleCase}(cursor.getLong(cursor.getColumnIndex(prefix + ${tableName}Table.${foreignKeyConstant})));
+        set${foreignKeyTitleCase}(cursor.getLong(cursor.getColumnIndex(prefix + ${tableClassName}Table.${foreignKeyConstant})));
 #end
 #end
 #end
@@ -63,13 +67,13 @@ public class ${tableName} {
 
     public void setRowId(long _id) {
         mRowId = _id;
-        mValues.put(${tableName}Table._ID, _id);
+        mValues.put(${tableClassName}Table._ID, _id);
     }
 #foreach ($field in $fields)
 #if($field)
     public void set${field.getNameAsTitleCase()}(${field.getJavaTypeString()} ${field.getFieldName()}) {
         ${field.getPrivateVariableName()} = ${field.getFieldName()};
-        mValues.put(${tableName}Table.${field.getConstantString()}, ${field.getFieldName()});
+        mValues.put(${tableClassName}Table.${field.getConstantString()}, ${field.getFieldName()});
     }
 
     public ${field.getJavaTypeString()} get${field.getNameAsTitleCase()}() {
@@ -89,7 +93,7 @@ public class ${tableName} {
 #if( $foreignKeyTitleCase )
     public void set${foreignKeyTitleCase}(Long ${foreignKeyVariableName}) {
         ${foreignKeyPrivateVariableName} = ${foreignKeyVariableName};
-        mValues.put(${tableName}Table.${foreignKeyConstant}, ${foreignKeyVariableName});
+        mValues.put(${tableClassName}Table.${foreignKeyConstant}, ${foreignKeyVariableName});
     }
 
     public Long get${foreignKeyTitleCase}() {
@@ -100,12 +104,12 @@ public class ${tableName} {
 #end
 #end
 
-    public static List<${tableName}> listFromCursor(Cursor cursor) {
-        List<${tableName}> list = new ArrayList<${tableName}>();
+    public static List<${tableClassName}> listFromCursor(Cursor cursor) {
+        List<${tableClassName}> list = new ArrayList<${tableClassName}>();
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                list.add(new ${tableName}(cursor));
+                list.add(new ${tableClassName}(cursor));
             } while (cursor.moveToNext());
         }
 
