@@ -37,7 +37,7 @@ public class ${providerName}Provider extends ContentProvider {
 #end
 
     private static final UriMatcher URI_MATCHER;
-    private ${providerName}Database mDatabase;
+    protected ${providerName}Database mDatabase;
 
 #set( $matcherIndex = 0 )
 #foreach( $table in $tables )
@@ -91,7 +91,7 @@ public class ${providerName}Provider extends ContentProvider {
 #end
 
     @Override
-    public final boolean onCreate() {
+    public boolean onCreate() {
         mDatabase = new ${providerName}Database(getContext());
         return true;
     }
