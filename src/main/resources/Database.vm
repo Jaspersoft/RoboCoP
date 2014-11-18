@@ -16,7 +16,7 @@ public class ${providerName}Database extends SQLiteOpenHelper {
     }
 
     @Override
-    public final void onCreate(final SQLiteDatabase db) {
+    public void onCreate(final SQLiteDatabase db) {
 #foreach( $table in $tables )
         db.execSQL(${table.getTableClassName()}Table.SQL_CREATE);
 
@@ -24,11 +24,11 @@ public class ${providerName}Database extends SQLiteOpenHelper {
     }
 
     @Override
-    public final void onUpgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
+    public void onUpgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
         upgrade(db, oldVersion, newVersion);
     }
 
-    private final void dropTablesAndCreate(final SQLiteDatabase db) {
+    protected void dropTablesAndCreate(final SQLiteDatabase db) {
 #foreach( $table in $tables )
         db.execSQL(${table.getTableClassName()}Table.SQL_DROP);
 
@@ -37,7 +37,7 @@ public class ${providerName}Database extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    private void upgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
+    protected void upgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
         dropTablesAndCreate(db);
     }
 }
