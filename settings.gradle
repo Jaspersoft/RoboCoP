@@ -1,0 +1,6 @@
+rootProject.name = 'SampleGradleIdea'
+
+include 'library'
+
+include 'sample'
+

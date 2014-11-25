@@ -1,4 +1,4 @@
-package com.rain.utils.android.robocop.clienttest;
+package src.com.rain.utils.android.robocop.clienttest;
 
 import com.rain.utils.android.robocop.generator.ContentProviderWriter;
 
