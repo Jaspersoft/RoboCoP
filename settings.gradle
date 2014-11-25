@@ -1,6 +1,4 @@
-rootProject.name = 'SampleGradleIdea'
+rootProject.name = 'gradle-robocop-plugin-parent'
 
-include 'library'
-
-include 'sample'
+include ':gradle-robocop-plugin', ':sample-library'
 

@@ -1,0 +1,2 @@
+include ':gradle-robocop-plugin'
+project(':gradle-robocop-plugin').projectDir = new File('../gradle-robocop-plugin')
