@@ -2,6 +2,7 @@ ClientTest/src-gen
 target
 out
 workspace.xml
+repo
 
 # Built application files
 *.apk
