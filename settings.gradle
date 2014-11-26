@@ -4,3 +4,4 @@ include ':gradle-robocop-plugin'
 project(':gradle-robocop-plugin').projectDir = "$rootDir/plugin" as File
 
 include ':sample-library'
+include ':sample-library-test'
