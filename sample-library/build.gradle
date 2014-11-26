@@ -1,12 +1,6 @@
 buildscript {
-    repositories {
-        maven {
-            url uri('../repo')
-        }
-    }
     dependencies {
         classpath "com.android.tools.build:gradle:0.13.3"
-        classpath "com.rain.utils.android.robocop:gradle-robocop-plugin:0.6-SNAPSHOT"
     }
 }
 

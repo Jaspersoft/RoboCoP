@@ -1,0 +1,7 @@
+repositories {
+    jcenter()
+}
+
+rootProject.dependencies {
+    compile project(':gradle-robocop-plugin')
+}
