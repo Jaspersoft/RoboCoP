@@ -5,18 +5,31 @@ buildscript {
         }
     }
     dependencies {
-        classpath group: 'com.rain.utils.android.robocop',
-                name: 'gradle-robocop-plugin',
-                version: '0.6-SNAPSHOT'
+        classpath "com.android.tools.build:gradle:0.13.3"
+        classpath "com.rain.utils.android.robocop:gradle-robocop-plugin:0.6-SNAPSHOT"
     }
 }
+
+apply plugin: 'com.android.application'
 apply plugin: 'gradle-robocop-plugin'
-apply plugin: 'java'
 
 repositories {
     mavenCentral()
 }
 
-dependencies {
-    compile project(':gradle-robocop-plugin')
+android {
+    compileSdkVersion 21
+    buildToolsVersion '21.0.2'
+
+    defaultConfig {
+        applicationId "com.example.myapp"
+        minSdkVersion 15
+        targetSdkVersion 21
+        versionCode 1
+        versionName '1.0'
+    }
+}
+
+robocop {
+    schemaPath "${projectDir}/schema/contentProviderSchema.json"
 }
