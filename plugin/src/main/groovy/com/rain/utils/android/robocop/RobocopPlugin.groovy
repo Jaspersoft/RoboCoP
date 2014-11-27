@@ -20,17 +20,14 @@ public class RoboCopPlugin implements Plugin<Project> {
             throw new ProjectConfigurationException("The android or android-library plugin must be applied to the project", null)
         }
 
-//        def robocopConfiguration = project.configurations.compile
-//        def robocopTestConfiguration = project.configurations.androidTestCompile
-
         project.extensions.create("robocop", RoboCopPluginExtension)
 
         project.afterEvaluate {
             project.android[variants].all { variant ->
                 configureVariant(project, variant)
-//                if (variant.testVariant) {
-//                    configureVariant(project, variant.testVariant, robocopTestConfiguration)
-//                }
+                if (variant.testVariant) {
+                    configureVariant(project, variant.testVariant)
+                }
             }
         }
     }
@@ -50,17 +47,9 @@ public class RoboCopPlugin implements Plugin<Project> {
 
         variant.addJavaSourceFoldersToModel(robocopOutput);
 
-//        def processorPath = configuration.getAsPath()
-//        variant.javaCompile.options.compilerArgs += [
-//                '-processorpath', processorPath,
-//                '-s', robocopOutput
-//        ]
-
-//        project.robocop.robocopArguments.variant = variant
-//        project.robocop.robocopArguments.project = project
-//        project.robocop.robocopArguments.android = project.android
-//
-//        variant.javaCompile.options.compilerArgs += project.robocop.arguments()
+        variant.javaCompile.options.compilerArgs += [
+                '-sourcepath', robocopOutput
+        ]
 
         def schemaPath = schemaFile.getAbsolutePath()
         def generatedSourcePath = robocopOutput.canonicalPath
