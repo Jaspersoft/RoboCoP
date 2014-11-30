@@ -92,6 +92,10 @@
           "left_table" : "person",
           "right_table" : "vehicle",
           "foreign_key" : "custom_key_id",
+          "modify_action": {
+              "type": "delete",
+              "action": "cascade"
+          },
           "type" : "to_many"
       },
       {

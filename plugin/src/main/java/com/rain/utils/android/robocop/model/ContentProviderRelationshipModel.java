@@ -31,6 +31,9 @@ public class ContentProviderRelationshipModel {
     @SerializedName("foreign_key")
     private String mForeignKeyName;
 
+    @SerializedName("modify_action")
+    private ContentProviderModifyAction mModifyAction;
+
     private ContentProviderTableModel mRightTableModel;
 
     public ContentProviderRelationshipModel(String referenceType, String customName, String leftTableName, String rightTableName) {
@@ -129,5 +132,10 @@ public class ContentProviderRelationshipModel {
         String constantName = getForeignKeyNameForTable(table);
         if (constantName == null) return null;
         return StringUtils.convertToTitleCase(constantName);
+    }
+
+    public String getModifyAction() {
+        if (mModifyAction == null) return "";
+        return " ON " + mModifyAction.getType() + " " + mModifyAction.getAction();
     }
 }
