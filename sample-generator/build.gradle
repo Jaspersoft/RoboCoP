@@ -1,6 +1,6 @@
 apply plugin: 'java'
 
 dependencies {
-    compile project(':gradle-robocop-plugin')
+    compile project(':robocop-library')
 }
 

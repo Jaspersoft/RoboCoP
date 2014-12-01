@@ -2,6 +2,8 @@ repositories {
     jcenter()
 }
 
+apply plugin: 'java'
+
 rootProject.dependencies {
-    compile project(':gradle-robocop-plugin')
+    //compile project(':gradle-robocop-plugin')
 }

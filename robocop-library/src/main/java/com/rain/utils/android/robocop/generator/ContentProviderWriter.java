@@ -30,6 +30,7 @@ public class ContentProviderWriter {
             model.inflateRelationships();
             createContentProvider(model, addTrailingSlashIfNeed(sourcePath));
         } catch (IOException e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException("Failed to create content provider", e);
         }
     }
@@ -83,7 +84,7 @@ public class ContentProviderWriter {
             }
 
         } catch (IOException e) {
-
+            System.out.println(e.getMessage());
         }
     }
 

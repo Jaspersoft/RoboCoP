@@ -13,14 +13,6 @@ repositories {
 
 dependencies {
     compile gradleApi()
-    compile 'com.google.code.gson:gson:2.3'
-    compile 'org.apache.velocity:velocity:1.7'
+    compile project(':robocop-library')
 }
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: uri('../repo'))
-        }
-    }
-}
