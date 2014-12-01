@@ -12,30 +12,30 @@ public class RoboCopPlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
         def variants = null;
+        def androidExtension = null;
         if (project.plugins.findPlugin("com.android.application") || project.plugins.findPlugin("android")) {
+            androidExtension = project.plugins.getPlugin("com.android.application").extension
             variants = "applicationVariants";
         } else if (project.plugins.findPlugin("com.android.library") || project.plugins.findPlugin("android-library")) {
+            androidExtension = project.plugins.getPlugin("com.android.library").extension
             variants = "libraryVariants";
         } else {
             throw new ProjectConfigurationException("The android or android-library plugin must be applied to the project", null)
         }
 
-//        def robocopConfiguration = project.configurations.compile
-//        def robocopTestConfiguration = project.configurations.androidTestCompile
-
         project.extensions.create("robocop", RoboCopPluginExtension)
 
         project.afterEvaluate {
             project.android[variants].all { variant ->
-                configureVariant(project, variant)
-//                if (variant.testVariant) {
-//                    configureVariant(project, variant.testVariant, robocopTestConfiguration)
-//                }
+                configureVariant(project, variant, androidExtension)
+                if (variant.testVariant) {
+                    configureVariant(project, variant.testVariant, androidExtension)
+                }
             }
         }
     }
 
-    static void configureVariant(def project, def variant) {
+    def configureVariant(def project, def variant, def android) {
         if (project.robocop.schemaPath == null) {
             project.getLogger().info('RoboCop: Schema path is not defined. Exiting!')
             return;
@@ -50,25 +50,29 @@ public class RoboCopPlugin implements Plugin<Project> {
 
         variant.addJavaSourceFoldersToModel(robocopOutput);
 
-//        def processorPath = configuration.getAsPath()
-//        variant.javaCompile.options.compilerArgs += [
-//                '-processorpath', processorPath,
-//                '-s', robocopOutput
-//        ]
+//        android.sourceSets[sourceSetName(variant)].java.srcDirs.addAll robocopOutput.path
+//        variant.javaCompile.source = variant.javaCompile.source.filter {
+//            !variant.variantData.extraGeneratedSourceFolders.each { folder ->
+//                folder.path.startsWith(robocopOutput.path)
+//            }
+//        }
 
-//        project.robocop.robocopArguments.variant = variant
-//        project.robocop.robocopArguments.project = project
-//        project.robocop.robocopArguments.android = project.android
-//
-//        variant.javaCompile.options.compilerArgs += project.robocop.arguments()
+        variant.javaCompile.options.compilerArgs += [
+                '-sourcepath', robocopOutput
+        ]
 
         def schemaPath = schemaFile.getAbsolutePath()
         def generatedSourcePath = robocopOutput.canonicalPath
 
+        ContentProviderGenerator.generateContentProvider(schemaPath, generatedSourcePath)
+
         variant.javaCompile.doFirst {
             robocopOutput.mkdirs()
-            ContentProviderGenerator.generateContentProvider(schemaPath, generatedSourcePath)
         }
+    }
+
+    def sourceSetName(variant) {
+        variant.dirName.split('/').last()
     }
 
 }

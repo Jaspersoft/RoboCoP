@@ -3,5 +3,6 @@ rootProject.name = 'gradle-robocop-plugin-parent'
 include ':gradle-robocop-plugin'
 project(':gradle-robocop-plugin').projectDir = "$rootDir/plugin" as File
 
-include ':sample-library'
-include ':sample-library-test'
+include ':sample-generator'
+//include ':sample-library'
+//include ':sample-library-test'

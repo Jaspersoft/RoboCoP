@@ -1,11 +1,13 @@
 buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:0.13.3"
+        classpath "com.neenbedankt.gradle.plugins:android-apt:1.4"
     }
 }
 
 apply plugin: 'com.android.application'
 apply plugin: 'gradle-robocop-plugin'
+apply plugin: 'android-apt'
 
 repositories {
     mavenCentral()
@@ -26,9 +28,16 @@ android {
 
 robocop {
     schemaPath "${projectDir}/schema/contentProviderSchema.json"
+}
 
-//    arguments {
-//        androidManifestFile variant.processResources.manifestFile
-//        resourcePackageName "com.example.myapp"
-//    }
+apt {
+    arguments {
+        androidManifestFile variant.processResources.manifestFile
+        resourcePackageName "com.example.myapp"
+    }
+}
+
+dependencies {
+    compile("org.androidannotations:androidannotations-api:3.1")
+    apt "org.androidannotations:androidannotations:3.1"
 }
