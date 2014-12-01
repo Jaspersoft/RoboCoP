@@ -26,4 +26,9 @@ android {
 
 robocop {
     schemaPath "${projectDir}/schema/contentProviderSchema.json"
+
+//    arguments {
+//        androidManifestFile variant.processResources.manifestFile
+//        resourcePackageName "com.example.myapp"
+//    }
 }
