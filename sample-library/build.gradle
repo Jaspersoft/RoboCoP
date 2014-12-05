@@ -1,0 +1,43 @@
+buildscript {
+    dependencies {
+        classpath "com.android.tools.build:gradle:0.13.3"
+        classpath "com.neenbedankt.gradle.plugins:android-apt:1.4"
+    }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'gradle-robocop-plugin'
+apply plugin: 'android-apt'
+
+repositories {
+    mavenCentral()
+}
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion '21.0.2'
+
+    defaultConfig {
+        applicationId "com.ifit.android.sdk.provider"
+        minSdkVersion 15
+        targetSdkVersion 21
+        versionCode 1
+        versionName '1.0'
+    }
+}
+
+robocop {
+    schemaPath "${projectDir}/schema/contentProviderSchema.json"
+}
+
+apt {
+    arguments {
+        androidManifestFile variant.processResources.manifestFile
+        resourcePackageName "com.ifit.android.sdk.provider"
+    }
+}
+
+dependencies {
+    compile("org.androidannotations:androidannotations-api:3.1")
+    apt "org.androidannotations:androidannotations:3.1"
+}

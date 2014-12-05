@@ -1,0 +1,18 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+}
+
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile gradleApi()
+    compile project(':robocop-library')
+}
+

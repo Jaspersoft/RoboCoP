@@ -1,0 +1,108 @@
+{
+  "packageName": "com.rain.example.data",
+  "providerName": "jasper_mobile_db",
+  "databaseVersion": 1,
+  "tables": [
+    {
+      "name": "person",
+      "members" : [
+        {
+          "type" : "string",
+          "name" : "name"
+        },
+        {
+          "type" : "int",
+          "name" : "age"
+        },
+      ]
+    },
+    {
+      "name": "hobby",
+      "members": [
+        {
+          "type": "string",
+          "name": "name"
+        },
+        {
+          "type": "string",
+          "name": "description"
+        },
+        {
+          "type": "boolean",
+          "name": "my"
+        }
+        ]
+    },
+     {
+       "name": "phone_contact",
+       "members": [
+         {
+           "type": "string",
+           "name": "number"
+         },
+         {
+           "type": "string",
+           "name": "phone_type"
+         }
+         ]
+     },
+     {
+        "name": "work_place",
+        "members": [
+          {
+            "type": "string",
+            "name": "name"
+          },
+          {
+            "type": "string",
+            "name": "address"
+          }
+        ]
+     },
+     {
+        "name": "vehicle",
+        "members": [
+          {
+            "type": "string",
+            "name": "make"
+          },
+          {
+            "type": "string",
+            "name": "model"
+          },
+          {
+            "type": "string",
+            "name": "color"
+          }
+        ]
+     },
+     {
+        "name": "house",
+        "members": [
+          {
+            "type": "string",
+            "name": "label"
+          }
+        ]
+     }
+  ],
+  "relationships" : [
+      {
+          "name" : "person_vehicle",
+          "left_table" : "person",
+          "right_table" : "vehicle",
+          "foreign_key" : "custom_key_id",
+          "modify_action": {
+              "type": "delete",
+              "action": "cascade"
+          },
+          "type" : "to_many"
+      },
+      {
+          "name" : "person_house",
+          "left_table" : "person",
+          "right_table" : "house",
+          "type" : "to_many"
+      }
+  ]
+}
