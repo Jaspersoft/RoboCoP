@@ -9,6 +9,7 @@
 package com.example.myapp;
 
 import com.example.myapp.test.support.UnitTestSpecification;
+import com.ifit.android.sdk.provider.BuildConfig;
 
 import org.junit.Test;
 

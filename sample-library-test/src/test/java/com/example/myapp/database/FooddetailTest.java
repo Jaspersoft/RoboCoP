@@ -11,9 +11,7 @@ import com.ifit.android.sdk.provider.IfitDatabaseProvider;
 import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNot.not;
 
 public class FooddetailTest extends DatabaseSpecification {
     @Test
@@ -26,13 +24,11 @@ public class FooddetailTest extends DatabaseSpecification {
         Uri resultUri = getContentResolver()
                 .insert(IfitDatabaseProvider.FOOD_DETAIL_CONTENT_URI,
                         fooddetail.getContentValues());
-        assertThat(resultUri, is(not(null)));
-
-        int newId = Integer.valueOf(resultUri.getLastPathSegment());
-        assertThat(newId, greaterThan(0));
+        assertNewUri(resultUri);
 
         Cursor cursor = getContentResolver()
                 .query(resultUri, FooddetailTable.ALL_COLUMNS, null, null, null);
+        cursor.moveToFirst();
 
         String resultName = cursor.getString(columnIndex(cursor, FooddetailTable.FOOD_NAME));
         assertThat(resultName, is("Apple"));

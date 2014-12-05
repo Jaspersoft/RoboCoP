@@ -18,7 +18,7 @@ android {
     buildToolsVersion '21.0.2'
 
     defaultConfig {
-        applicationId "com.example.myapp"
+        applicationId "com.ifit.android.sdk.provider"
         minSdkVersion 15
         targetSdkVersion 21
         versionCode 1
@@ -33,7 +33,7 @@ robocop {
 apt {
     arguments {
         androidManifestFile variant.processResources.manifestFile
-        resourcePackageName "com.example.myapp"
+        resourcePackageName "com.ifit.android.sdk.provider"
     }
 }
 

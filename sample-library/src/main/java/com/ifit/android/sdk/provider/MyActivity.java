@@ -1,4 +1,4 @@
-package com.example.myapp;
+package com.ifit.android.sdk.provider;
 
 import android.app.Activity;
 

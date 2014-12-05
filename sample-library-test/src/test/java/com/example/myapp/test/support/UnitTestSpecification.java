@@ -1,13 +1,12 @@
 package com.example.myapp.test.support;
 
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
 import org.robolectric.shadows.ShadowLog;
 
 import java.io.IOException;
 import java.util.logging.LogManager;
 
-@RunWith(RobolectricTestRunner.class)
+@RunWith(CustomRobolectricTestRunner.class)
 public abstract class UnitTestSpecification {
 
     public UnitTestSpecification() {
