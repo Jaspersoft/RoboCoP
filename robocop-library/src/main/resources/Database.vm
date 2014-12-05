@@ -2,12 +2,14 @@ package ${packageName}.database;
 
 import ${packageName}.database.table.*;
 
+import android.os.Build;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 #set( $providerNameLower = $originalProviderName.toLowerCase() )
 public class ${providerName}Database extends SQLiteOpenHelper {
+    public static final boolean FOREIGN_KEYS_SUPPORTED = Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO;
     private static final String DATABASE_NAME = "${providerNameLower}";
     private static final int DATABASE_VERSION = ${databaseVersion};
 
@@ -17,6 +19,7 @@ public class ${providerName}Database extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(final SQLiteDatabase db) {
+        executePragmas(db);
 #foreach( $table in $tables )
         db.execSQL(${table.getTableClassName()}Table.SQL_CREATE);
 
@@ -25,6 +28,7 @@ public class ${providerName}Database extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
+        executePragmas(db);
         upgrade(db, oldVersion, newVersion);
     }
 
@@ -39,5 +43,23 @@ public class ${providerName}Database extends SQLiteOpenHelper {
 
     protected void upgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
         dropTablesAndCreate(db);
+    }
+
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        if (!db.isReadOnly()) {
+            executePragmas(db);
+        }
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////
+    // PRIVATE METHODS
+    //////////////////////////////////////////////////////////////////////////////////////
+
+    protected void executePragmas(SQLiteDatabase db) {
+        if (FOREIGN_KEYS_SUPPORTED) {
+            db.execSQL("PRAGMA foreign_keys=ON;");
+        }
     }
 }
