@@ -40,7 +40,7 @@ public class RoboCopPlugin implements Plugin<Project> {
         def outputDir = project.file(new File(project.buildDir, "generated/source/db"))
         def sourceOutputDir = new File(outputDir, variant.dirName)
 
-        def taskName = "${ROBOCOP_TASK_NAME}${variant.getName()}"
+        def taskName = "${ROBOCOP_TASK_NAME}${variant.getName().capitalize()}"
         def generateTask = project.tasks.create(name: taskName) << {
             def schemaFile = new File(project.robocop.schemaPath)
             def schemaPath = schemaFile.getAbsolutePath()
