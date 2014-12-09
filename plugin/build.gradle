@@ -11,8 +11,23 @@ repositories {
     jcenter()
 }
 
+ext {
+    PUBLISH_GROUP_ID = 'com.rain.utils.android.robocop'
+    PUBLISH_ARTIFACT_ID = 'gradle-robocop-plugin'
+    PUBLISH_VERSION = '0.6-SNAPSHOT'
+}
+
 dependencies {
     compile gradleApi()
     compile project(':robocop-library')
 }
 
+uploadArchives {
+    repositories.mavenDeployer {
+        pom.groupId = PUBLISH_GROUP_ID
+        pom.artifactId = PUBLISH_ARTIFACT_ID
+        pom.version = PUBLISH_VERSION
+        // Add other pom properties here if you want (developer details / licenses)
+        repository(url: "file://${buildDir}/release/${PUBLISH_VERSION}")
+    }
+}

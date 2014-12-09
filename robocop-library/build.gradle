@@ -5,7 +5,6 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'maven'
 
 repositories {
     jcenter()
@@ -14,14 +13,4 @@ repositories {
 dependencies {
     compile 'com.google.code.gson:gson:2.3'
     compile 'org.apache.velocity:velocity:1.7'
-    runtime 'com.google.code.gson:gson:2.3'
-    runtime 'org.apache.velocity:velocity:1.7'
-}
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: uri('../repo'))
-        }
-    }
 }
