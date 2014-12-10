@@ -2,13 +2,15 @@ package ${packageName}.model;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import ${packageName}.database.table.${tableClassName}Table;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ${tableClassName} {
+public class ${tableClassName} implements Parcelable {
     private long mRowId;
 #foreach( $field in $fields )
 #if($field)
@@ -115,4 +117,73 @@ public class ${tableClassName} {
 
         return list;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(this.mRowId);
+#foreach( $field in $fields )
+#if($field)
+#if( $field.getJavaTypeString() == "boolean" )
+        dest.writeByte(this.${field.getPrivateVariableName()} ? (byte) 1 : (byte) 0);
+#end
+#if( $field.getJavaTypeString() == "int" )
+        dest.writeInt(this.${field.getPrivateVariableName()});
+#end
+#if( $field.getJavaTypeString() == "long" )
+        dest.writeLong(this.${field.getPrivateVariableName()});
+#end
+#if( $field.getJavaTypeString() == "float" )
+        dest.writeFloat(this.${field.getPrivateVariableName()});
+#end
+#if( $field.getJavaTypeString() == "double" )
+        dest.writeDouble(this.${field.getPrivateVariableName()});
+#end
+#if( $field.getJavaTypeString() == "String" )
+        dest.writeString(this.${field.getPrivateVariableName()});
+#end
+#end
+#end
+    }
+
+    public ${tableClassName}(Parcel in) {
+        this.mRowId = in.readLong();
+#foreach( $field in $fields )
+#if($field)
+#if( $field.getJavaTypeString() == "boolean" )
+        this.${field.getPrivateVariableName()} = in.readByte() != 0;
+#end
+#if( $field.getJavaTypeString() == "int" )
+        this.${field.getPrivateVariableName()} = in.readInt();
+#end
+#if( $field.getJavaTypeString() == "long" )
+        this.${field.getPrivateVariableName()} = in.readLong();
+#end
+#if( $field.getJavaTypeString() == "float" )
+        this.${field.getPrivateVariableName()} = in.readFloat();
+#end
+#if( $field.getJavaTypeString() == "double" )
+        this.${field.getPrivateVariableName()} = in.readDouble();
+#end
+#if( $field.getJavaTypeString() == "String" )
+        this.${field.getPrivateVariableName()} = in.readString();
+#end
+#end
+#end
+    }
+
+    public static final Creator<${tableClassName}> CREATOR = new Creator<${tableClassName}>() {
+        public ${tableClassName} createFromParcel(Parcel source) {
+            return new ${tableClassName}(source);
+        }
+
+        public ${tableClassName}[] newArray(int size) {
+            return new ${tableClassName}[size];
+        }
+    };
+
 }
