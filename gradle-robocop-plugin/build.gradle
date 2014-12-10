@@ -11,15 +11,15 @@ repositories {
     jcenter()
 }
 
-ext {
-    PUBLISH_GROUP_ID = 'com.rain.utils.android.robocop'
-    PUBLISH_ARTIFACT_ID = 'gradle-robocop-plugin'
-    PUBLISH_VERSION = '0.6-SNAPSHOT'
-}
-
 dependencies {
     compile gradleApi()
     compile project(':robocop-library')
+}
+
+ext {
+    PUBLISH_GROUP_ID = 'com.rain.utils.android.robocop'
+    PUBLISH_ARTIFACT_ID = 'gradle-robocop-plugin'
+    PUBLISH_VERSION = '0.1-SNAPSHOT'
 }
 
 uploadArchives {

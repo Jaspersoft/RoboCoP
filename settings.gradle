@@ -4,7 +4,6 @@ include ':robocop-library'
 include ':sample-generator'
 
 include ':gradle-robocop-plugin'
-project(':gradle-robocop-plugin').projectDir = new File('../plugin')
 
 include ':sample-library'
 include ':sample-library-test'

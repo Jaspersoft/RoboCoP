@@ -5,6 +5,7 @@ buildscript {
 }
 
 apply plugin: 'java'
+apply plugin: 'maven'
 
 repositories {
     jcenter()
@@ -13,4 +14,20 @@ repositories {
 dependencies {
     compile 'com.google.code.gson:gson:2.3'
     compile 'org.apache.velocity:velocity:1.7'
+}
+
+ext {
+    PUBLISH_GROUP_ID = 'com.rain.utils.android.robocop'
+    PUBLISH_ARTIFACT_ID = 'robocop-library'
+    PUBLISH_VERSION = '0.6-SNAPSHOT'
+}
+
+uploadArchives {
+    repositories.mavenDeployer {
+        pom.groupId = PUBLISH_GROUP_ID
+        pom.artifactId = PUBLISH_ARTIFACT_ID
+        pom.version = PUBLISH_VERSION
+        // Add other pom properties here if you want (developer details / licenses)
+        repository(url: "file://${buildDir}/release/${PUBLISH_VERSION}")
+    }
 }

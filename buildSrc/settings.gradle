@@ -1,7 +1,5 @@
-//rootProject.name = 'gradle-robocop-plugin-parent'
+include ':gradle-robocop-plugin'
+project(':gradle-robocop-plugin').projectDir = new File('../gradle-robocop-plugin')
 
 include ':robocop-library'
 project(':robocop-library').projectDir = new File('../robocop-library')
-
-include ':gradle-robocop-plugin'
-project(':gradle-robocop-plugin').projectDir = new File('../plugin')
