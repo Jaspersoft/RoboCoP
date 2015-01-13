@@ -9,11 +9,12 @@ public class ContentProviderTableFieldModel {
     public static enum Type {
         STRING("TEXT", "String", "getString"),
         DOUBLE("REAL", "double", "getDouble"),
+        FLOAT("REAL", "float", "getFloat"),
         INT("NUMERIC", "int", "getInt"),
         LONG("NUMERIC", "long", "getLong"),
         BOOlEAN("NUMERIC", "boolean", "getInt"),
-        DATE("DATE", "String", "getString"),
-        DATETIME("DATETIME", "String", "getString"),
+        DATE("DATE", "double", "getDouble"),
+        DATETIME("DATETIME", "double", "getDouble"),
         ;
 
         private final String mSqlitePresentation;
@@ -74,11 +75,12 @@ public class ContentProviderTableFieldModel {
                     return func.apply(type);
                 }
             }
-            throw new IllegalArgumentException("For field: " + field + " no Type registered");
+            throw new IllegalArgumentException("For field: " + lowerField + " no Type registered");
         }
     }
 
     @SerializedName("type")
+
     private String mFieldType;
 
     @SerializedName("name")
@@ -87,19 +89,14 @@ public class ContentProviderTableFieldModel {
     @SerializedName("unique")
     private boolean isUnique;
 
-    @SerializedName("nullable")
-    private boolean isNullable;
+    @SerializedName("not_null")
+    private boolean isNotNull;
 
     @SerializedName("default")
     private String mDefaultValue;
 
     @SerializedName("check")
-    private String check;
-
-    public ContentProviderTableFieldModel(String fieldType, String fieldName) {
-        mFieldType = fieldType;
-        mFieldName = fieldName;
-    }
+    private String mCheck;
 
     public String getFieldType() {
         return mFieldType;
@@ -114,7 +111,7 @@ public class ContentProviderTableFieldModel {
     }
 
     public String getTypeString() {
-        return Type.getSqlitePresentation(Type.getSqlitePresentation(mFieldType));
+        return Type.getSqlitePresentation(mFieldType);
     }
 
     public String getJavaTypeString() {
@@ -131,5 +128,29 @@ public class ContentProviderTableFieldModel {
 
     public String getNameAsTitleCase() {
         return StringUtils.convertToTitleCase(mFieldName);
+    }
+
+    public boolean isUnique() {
+        return isUnique;
+    }
+
+    public boolean isNotNull() {
+        return isNotNull;
+    }
+
+    public boolean hasCheck() {
+        return (mCheck != null) && !mCheck.isEmpty();
+    }
+
+    public String getCheckCondition() {
+        return mCheck;
+    }
+
+    public boolean hasDefaultValue() {
+        return (mDefaultValue != null) && !mDefaultValue.isEmpty();
+    }
+
+    public String getDefaultValue() {
+        return mDefaultValue;
     }
 }
