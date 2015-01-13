@@ -1,6 +1,7 @@
 package com.ifit.android.sdk.provider;
 
 import android.app.Activity;
+import android.database.Cursor;
 
 import com.ifit.android.sdk.model.Fooddetail;
 

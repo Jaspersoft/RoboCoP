@@ -8,14 +8,18 @@
       "members" : [
         {
           "type" : "String",
-          "name" : "feature_title"
+          "name" : "feature_title",
+          "unique": true,
+          "not_null": true
         },
         {
           "type" : "String",
+          "unique": true,
           "name" : "feature_tag_line"
         },
         {
           "type" : "String",
+          "not_null": true,
           "name" : "promo_image_path"
         },
         {
@@ -24,11 +28,13 @@
         },
         {
           "type" : "double",
-          "name" : "distance"
+          "name" : "distance",
+          "check": "distance > 0"
         },
         {
           "type" : "int",
-          "name" : "calories"
+          "name" : "calories",
+          "default" : "100"
         },
         {
           "type" : "double",

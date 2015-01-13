@@ -11,7 +11,20 @@ public interface ${tableClassName}Table {
 #if ($field)
     String ${field.getConstantString()} = "${field.getConstantString().toLowerCase()}";
 #set ($allColumns = $allColumns + ", " + $field.getConstantString())
-#set ($tableCreate = $tableCreate + ", " + $field.getConstantString().toLowerCase() + " " + $field.getTypeString())
+#set ($fieldNotation = $field.getConstantString().toLowerCase() + " " + $field.getTypeString())
+#if ($field.isNotNull())
+#set ($fieldNotation = $fieldNotation + " NOT NULL")
+#end
+#if ($field.isUnique())
+#set ($fieldNotation = $fieldNotation + " UNIQUE")
+#end
+#if ($field.hasCheck())
+#set ($fieldNotation = $fieldNotation + " CHECK " + $field.getCheckCondition())
+#end
+#if ($field.hasDefaultValue())
+#set ($fieldNotation = $fieldNotation + " DEFAULT " + $field.getDefaultValue())
+#end
+#set ($tableCreate = $tableCreate + ", " + $fieldNotation)
 #if (!$insertFields)
 #set ($insertFields = $field.getConstantString().toLowerCase())
 #set ($escapeFields = "?")
