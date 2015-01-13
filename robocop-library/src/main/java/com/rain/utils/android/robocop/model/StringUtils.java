@@ -26,18 +26,32 @@ public class StringUtils {
     }
 
     public static String convertToTitleCase(String input) {
-        String[] parts = input.split("_");
-        String camelCaseString = "";
-        for (String part : parts){
-            camelCaseString = camelCaseString + toProperCase(part);
+        if (input.contains("_")) {
+            String[] parts = input.split("_");
+            String camelCaseString = "";
+            for (String part : parts) {
+                camelCaseString = camelCaseString + toProperCase(part);
+            }
+            return camelCaseString;
         }
-        return camelCaseString;
+        return capitalize(input);
     }
 
     public static String getUnderscoreNameString(String input) {
         String regex = "([a-z])([A-Z])";
         String replacement = "$1_$2";
         return input.replaceAll(regex, replacement);
+    }
+
+    public static String capitalize(String str) {
+        int strLen;
+        if (str == null || (strLen = str.length()) == 0) {
+            return str;
+        }
+        return new StringBuffer(strLen)
+                .append(Character.toTitleCase(str.charAt(0)))
+                .append(str.substring(1))
+                .toString();
     }
 
     public static String getConstantString(String input) {

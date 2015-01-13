@@ -12,6 +12,8 @@ import java.util.List;
  * Time: 9:46 AM
  */
 public class ContentProviderTableModel {
+    @SerializedName("parcelable")
+    private boolean isParcelable;
     @SerializedName("name")
     private String mTableName;
 
@@ -36,5 +38,9 @@ public class ContentProviderTableModel {
 
     public String getTableConstantName() {
         return StringUtils.getConstantString(mTableName);
+    }
+
+    public boolean isParcelable() {
+        return isParcelable;
     }
 }

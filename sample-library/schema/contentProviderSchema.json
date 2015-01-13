@@ -5,6 +5,7 @@
   "tables": [
     {
       "name": "FeaturedWorkout",
+      "parcelable": true,
       "members" : [
         {
           "type" : "String",

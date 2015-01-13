@@ -1,9 +1,8 @@
 package com.ifit.android.sdk.provider;
 
 import android.app.Activity;
-import android.database.Cursor;
 
-import com.ifit.android.sdk.model.Fooddetail;
+import com.ifit.android.sdk.model.FoodDetail;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -13,6 +12,6 @@ public class MyActivity extends Activity {
 
     @AfterViews
     final void init() {
-        Fooddetail fooddetail = new Fooddetail();
+        FoodDetail fooddetail = new FoodDetail();
     }
 }

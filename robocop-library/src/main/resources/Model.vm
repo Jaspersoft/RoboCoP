@@ -10,7 +10,11 @@ import ${packageName}.database.table.${tableClassName}Table;
 import java.util.ArrayList;
 import java.util.List;
 
+#if($table.isParcelable())
 public class ${tableClassName} implements Parcelable {
+#else
+public class ${tableClassName} {
+#end
     private long mRowId;
 #foreach( $field in $fields )
 #if($field)
@@ -26,7 +30,6 @@ public class ${tableClassName} implements Parcelable {
 #end
 #end
 #end
-
     private ContentValues mValues = new ContentValues();
 
     public ${tableClassName}() {}
@@ -82,10 +85,8 @@ public class ${tableClassName} implements Parcelable {
             return ${field.getPrivateVariableName()};
     }
 
-
 #end
 #end
-
 #if( $participatingRelationships )
 #foreach( $relationship in $participatingRelationships )
 #set( $foreignKeyTitleCase = $relationship.getForeignKeyVariableAsTitleCase($table) )
@@ -105,7 +106,6 @@ public class ${tableClassName} implements Parcelable {
 #end
 #end
 #end
-
     public static List<${tableClassName}> listFromCursor(Cursor cursor) {
         List<${tableClassName}> list = new ArrayList<${tableClassName}>();
 
@@ -117,6 +117,7 @@ public class ${tableClassName} implements Parcelable {
 
         return list;
     }
+#if($table.isParcelable())
 
     @Override
     public int describeContents() {
@@ -151,26 +152,26 @@ public class ${tableClassName} implements Parcelable {
     }
 
     public ${tableClassName}(Parcel in) {
-        this.mRowId = in.readLong();
+        setRowId(in.readLong());
 #foreach( $field in $fields )
 #if($field)
 #if( $field.getJavaTypeString() == "boolean" )
-        this.${field.getPrivateVariableName()} = in.readByte() != 0;
+        set${field.getNameAsTitleCase()}(in.readByte() != 0);
 #end
 #if( $field.getJavaTypeString() == "int" )
-        this.${field.getPrivateVariableName()} = in.readInt();
+        set${field.getNameAsTitleCase()}(in.readInt());
 #end
 #if( $field.getJavaTypeString() == "long" )
-        this.${field.getPrivateVariableName()} = in.readLong();
+        set${field.getNameAsTitleCase()}(in.readLong());
 #end
 #if( $field.getJavaTypeString() == "float" )
-        this.${field.getPrivateVariableName()} = in.readFloat();
+        set${field.getNameAsTitleCase()}(in.readFloat());
 #end
 #if( $field.getJavaTypeString() == "double" )
-        this.${field.getPrivateVariableName()} = in.readDouble();
+        set${field.getNameAsTitleCase()}(in.readDouble());
 #end
 #if( $field.getJavaTypeString() == "String" )
-        this.${field.getPrivateVariableName()} = in.readString();
+        set${field.getNameAsTitleCase()}(in.readString());
 #end
 #end
 #end
@@ -185,5 +186,5 @@ public class ${tableClassName} implements Parcelable {
             return new ${tableClassName}[size];
         }
     };
-
+#end
 }
