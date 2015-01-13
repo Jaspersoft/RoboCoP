@@ -14,6 +14,8 @@ import java.util.List;
 public class ContentProviderTableModel {
     @SerializedName("parcelable")
     private boolean isParcelable;
+    @SerializedName("buildable")
+    private boolean isBuildable;
     @SerializedName("name")
     private String mTableName;
 
@@ -42,5 +44,9 @@ public class ContentProviderTableModel {
 
     public boolean isParcelable() {
         return isParcelable;
+    }
+
+    public boolean isBuildable() {
+        return isBuildable;
     }
 }

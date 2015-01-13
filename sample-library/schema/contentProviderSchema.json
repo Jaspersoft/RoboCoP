@@ -6,6 +6,7 @@
     {
       "name": "FeaturedWorkout",
       "parcelable": true,
+      "buildable": true,
       "members" : [
         {
           "type" : "String",

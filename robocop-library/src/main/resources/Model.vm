@@ -81,6 +81,14 @@ public class ${tableClassName} {
         mValues.put(${tableClassName}Table.${field.getConstantString()}, ${field.getFieldName()});
     }
 
+#if($table.isBuildable())
+    public ${tableClassName} with${field.getNameAsTitleCase()}(${field.getJavaTypeString()} ${field.getFieldName()}) {
+        set${field.getNameAsTitleCase()}(${field.getFieldName()});
+        return this;
+    }
+
+#end
+
     public ${field.getJavaTypeString()} get${field.getNameAsTitleCase()}() {
             return ${field.getPrivateVariableName()};
     }
@@ -102,7 +110,13 @@ public class ${tableClassName} {
     public Long get${foreignKeyTitleCase}() {
             return ${foreignKeyPrivateVariableName};
     }
+#if($table.isBuildable())
 
+    public ${tableClassName} with${foreignKeyTitleCase}(Long ${foreignKeyVariableName}) {
+        set${foreignKeyTitleCase}(${foreignKeyVariableName});
+        return this;
+    }
+#end
 #end
 #end
 #end
